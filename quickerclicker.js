@@ -7,34 +7,64 @@ $(function(){
 
 	QuickerClicker.ClickOMeter = Backbone.Model.extend({
 		initialize: function(){
-			var self = this;
-			self.startTimer();
 		},
 
 		defaults: {
+			countdownTimeInSeconds: 3,
+			countdownActive: false,
 			clicksPerSecond: 0.0,
 			numberOfClicks: 0,
 			updateSpeedInMilliseconds: 100,
 			timeToLiveInMilliseconds: 30000,
-			numberOfMillisecondsRemaing: 30000
+			numberOfMillisecondsRemaing: 0,
+			timeToFirstClick: undefined,
+			fastestClick: undefined
 		},
 
 		registerClick: function(){
 			if (this.get("numberOfMillisecondsRemaing") > 0){
 				this.set("numberOfClicks", this.get("numberOfClicks") + 1);
+				if (this.get("timeToFirstClick") == undefined){
+					this.set("timeToFirstClick", this.get("dateTimerStart").getTime() - new Date().getTime());
+				}
 			}
 		},
 
 		resetToDefaults: function(){
 			this.set(this.defaults);
+			return this;
+		},
+
+		start: function(){
+			var self = this;
+			if (self.get("timerInterval") == undefined){
+				self.resetToDefaults();
+				self.startCountdown();
+			}
 		},
 
 		startTimer: function(){
 			var self = this;
-			if (self.get("timerInterval") == undefined){
-				self.resetToDefaults();
-				self.set("timerInterval", setInterval(function(){ self.update(); }, self.get("updateSpeedInMilliseconds")));
+			self.set("dateTimerStart", new Date());
+			self.set("numberOfMillisecondsRemaing", self.get("timeToLiveInMilliseconds"));
+			self.set("timerInterval", setInterval(function(){ self.update(); }, self.get("updateSpeedInMilliseconds")));
+		},
+
+		startCountdown: function(){
+			var self = this;
+
+			var countdownTimeout = function(){
+				self.set("countdownTimeInSeconds", self.get("countdownTimeInSeconds") - 1);
+				if (self.get("countdownTimeInSeconds") > 0){
+					setTimeout(countdownTimeout, 1000);
+				} else {
+					self.set("countdownActive", false);
+					self.startTimer();
+				}
 			}
+
+			self.set("countdownActive", true);
+			setTimeout(countdownTimeout, 1000);
 		},
 
 		stopTimer: function(){
@@ -43,7 +73,6 @@ $(function(){
 				clearInterval(self.get("timerInterval"));
 				self.set("timerInterval", undefined);
 			}
-			this.trigger("gameOver");
 		},
 
 		update: function(){
@@ -84,6 +113,11 @@ $(function(){
 
 		$("html").on("click", function(){
 			clickOMeter.registerClick();
+		});
+
+		$(document).on("click", ".js-start", function(e){
+			e.preventDefault();
+			clickOMeter.start();
 		});
 
 		QuickerClicker.main.show(clickOMeterView);

@@ -13,11 +13,11 @@
 		<header class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
-					<a href="/" class="navbar-brand">asdf</a>
+					<a href="/" class="navbar-brand">Quicker Clicker</a>
 				</div>
 				<nav class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="#">Start</a></li>
+						<li><a href="#start" class="js-start">Start</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -32,12 +32,18 @@
 		<script type="text/template" id="clickometer-template">
 			<div class="row">
 				<div class="col-xs-12">
-					<h1><%= clicksPerSecond.toFixed(2) %></h1>
+					<h1><%= clicksPerSecond.toFixed(2) %> clicks per second</h1>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
 					<span class="glyphicon glyphicon-time"></span><%= Math.round(numberOfMillisecondsRemaing / 1000) %>
+				</div>
+			</div>
+			<%= (countdownActive && countdownTimeInSeconds) > 0 ? countdownTimeInSeconds : '' %>
+			<div class="row">
+				<div class="col-xs-12">
+					<%= timeToFirstClick %> milliseconds to first click
 				</div>
 			</div>
 		</script>
