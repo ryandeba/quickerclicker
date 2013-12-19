@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-		<link href="bower_components/font-awesome/css/font-awesome.css" rel="stylesheet" />
 		<link href="application.css" rel="stylesheet" />
 		<script src="bower_components/jquery/jquery.js"></script>
 		<script src="bower_components/underscore/underscore.js"></script>
@@ -42,26 +41,20 @@
 				</div>
 			</div>
 
+			<% var percentRemaining = numberOfMillisecondsRemaing / timeToLiveInMilliseconds * 100 %>
+			<% var progressBarClass = "success" %>
+			<% progressBarClass = percentRemaining < 80 ? "info" : progressBarClass %>
+			<% progressBarClass = percentRemaining < 40 ? "warning" : progressBarClass %>
+			<% progressBarClass = percentRemaining < 10 ? "danger" : progressBarClass %>
 			<div class="row">
 				<div class="col-xs-12">
-					<i class="fa fa-clock-o"></i><%= Math.round(numberOfMillisecondsRemaing / 1000) %><br>
 					<div class="progress progress-striped">
-						<div class="progress-bar" style="width: <%= numberOfMillisecondsRemaing / timeToLiveInMilliseconds * 100 %>%;"></div>
+						<div class="progress-bar progress-bar-<%= progressBarClass %>" style="width: <%= percentRemaining %>%;"></div>
 					</div>
 				</div>
 			</div>
 
 			<%= (countdownActive && countdownTimeInSeconds) > 0 ? countdownTimeInSeconds : '' %>
-			<div class="row">
-				<div class="col-xs-12">
-					<%= millisecondsToFirstClick %> milliseconds to first click
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<%= millisecondsOfFastestClick %> milliseconds of fastest click
-				</div>
-			</div>
 		</script>
 	</body>
 </html>
