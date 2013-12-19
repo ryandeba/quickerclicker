@@ -72,6 +72,7 @@ $(function(){
 					setTimeout(countdownTimeout, 1000);
 				} else {
 					self.set("countdownActive", false);
+					self.set("timerStartEpoch", new Date().getTime());
 					self.startTimer();
 				}
 			}
@@ -116,6 +117,12 @@ $(function(){
 		},
 
 		template: "#clickometer-template"
+	});
+
+	QuickerClicker.Achievement = Backbone.Model.extend({
+	});
+
+	QuickerClicker.Achievements = Backbone.Collection.extend({
 	});
 
 	QuickerClicker.Menu = Backbone.Model.extend({});
