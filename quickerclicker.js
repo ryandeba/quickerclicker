@@ -85,6 +85,7 @@ $(function(){
 			if (self.get("timerInterval") != undefined){
 				clearInterval(self.get("timerInterval"));
 				self.set("timerInterval", undefined);
+				self.trigger("gameOver");
 			}
 		},
 
