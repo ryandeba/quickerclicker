@@ -6,8 +6,6 @@ $(function(){
 	});
 
 	QuickerClicker.ClickOMeter = Backbone.Model.extend({
-		initialize: function(){
-		},
 
 		defaults: {
 			countdownTimeInSeconds: 3,
@@ -17,16 +15,31 @@ $(function(){
 			updateSpeedInMilliseconds: 100,
 			timeToLiveInMilliseconds: 30000,
 			numberOfMillisecondsRemaing: 0,
-			timeToFirstClick: undefined,
-			fastestClick: undefined
+			millisecondsToFirstClick: undefined,
+			millisecondsOfFastestClick: undefined,
+			mostRecentClickEpoch: undefined
 		},
 
 		registerClick: function(){
 			if (this.get("numberOfMillisecondsRemaing") > 0){
+
 				this.set("numberOfClicks", this.get("numberOfClicks") + 1);
-				if (this.get("timeToFirstClick") == undefined){
-					this.set("timeToFirstClick", this.get("dateTimerStart").getTime() - new Date().getTime());
+				if (this.get("millisecondsToFirstClick") == undefined){
+					this.set("millisecondsToFirstClick", new Date().getTime() - this.get("dateTimerStart").getTime());
 				}
+
+				var thisClickEpoch = new Date().getTime();
+				if (this.get("mostRecentClickEpoch") != undefined){
+					var speedOfThisClickInMilliseconds = thisClickEpoch - this.get("mostRecentClickEpoch");
+					if (
+						this.get("millisecondsOfFastestClick") == undefined
+						|| speedOfThisClickInMilliseconds < this.get("millisecondsOfFastestClick")
+					){
+						this.set("millisecondsOfFastestClick", speedOfThisClickInMilliseconds);
+					}
+				}
+				this.set("mostRecentClickEpoch", thisClickEpoch);
+
 			}
 		},
 
@@ -104,23 +117,50 @@ $(function(){
 		template: "#clickometer-template"
 	});
 
-	QuickerClicker.on("initialize:after", function(){
-		var clickOMeter = new QuickerClicker.ClickOMeter();
+	QuickerClicker.Menu = Backbone.Model.extend({});
+	QuickerClicker.MenuView = Backbone.Marionette.ItemView.extend({
 
-		var clickOMeterView = new QuickerClicker.ClickOMeterView({
-			model: clickOMeter
-		});
+		events: {
+			"click .js-start-game": "startGame"
+		},
 
-		$("html").on("click", function(){
-			clickOMeter.registerClick();
-		});
+		template: "#menu-template",
 
-		$(document).on("click", ".js-start", function(e){
-			e.preventDefault();
-			clickOMeter.start();
-		});
+		startGame: function(){
+			this.model.trigger("startGame");
+		}
 
+	});
+
+	QuickerClicker.startGame = function(){
 		QuickerClicker.main.show(clickOMeterView);
+		clickOMeter.start();
+	};
+
+	QuickerClicker.on("initialize:after", function(){
+		$("html").on("click", function(e){
+			if (e.originalEvent != undefined){
+				clickOMeter.registerClick();
+			}
+		});
+
+		QuickerClicker.listenTo(menu, "startGame", QuickerClicker.startGame);
+
+		QuickerClicker.main.show(menuView);
+	});
+
+	var clickOMeter = new QuickerClicker.ClickOMeter();
+	var clickOMeterView = new QuickerClicker.ClickOMeterView({
+		attributes: {
+			"class": "row"
+		},
+
+		model: clickOMeter
+	});
+
+	var menu = new QuickerClicker.Menu();
+	var menuView = new QuickerClicker.MenuView({
+		model: menu
 	});
 
 	QuickerClicker.start();
