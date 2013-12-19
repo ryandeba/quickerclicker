@@ -38,14 +38,19 @@
 		<script type="text/template" id="clickometer-template">
 			<div class="row">
 				<div class="col-xs-12">
-					<h1><%= clicksPerSecond.toFixed(2) %> clicks per second</h1>
+					<span style="font-size: 94px;"><%= clicksPerSecond.toFixed(2) %></span> clicks per second
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-xs-12">
-					<i class="fa fa-clock-o"></i><%= Math.round(numberOfMillisecondsRemaing / 1000) %>
+					<i class="fa fa-clock-o"></i><%= Math.round(numberOfMillisecondsRemaing / 1000) %><br>
+					<div class="progress progress-striped">
+						<div class="progress-bar" style="width: <%= numberOfMillisecondsRemaing / timeToLiveInMilliseconds * 100 %>%;"></div>
+					</div>
 				</div>
 			</div>
+
 			<%= (countdownActive && countdownTimeInSeconds) > 0 ? countdownTimeInSeconds : '' %>
 			<div class="row">
 				<div class="col-xs-12">

@@ -12,7 +12,7 @@ $(function(){
 			countdownActive: false,
 			clicksPerSecond: 0.0,
 			numberOfClicks: 0,
-			updateSpeedInMilliseconds: 100,
+			updateSpeedInMilliseconds: 50,
 			timeToLiveInMilliseconds: 30000,
 			numberOfMillisecondsRemaing: 0,
 			millisecondsToFirstClick: undefined,
