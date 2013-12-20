@@ -23,8 +23,18 @@
 		</div>
 
 		<script type="text/template" id="menu-template">
-			<div class="col-xs-6 col-xs-offset-3">
-				<button class="btn btn-primary js-start-game">Start Game</button>
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<button class="btn btn-primary js-start-game">Start Game</button>
+				</div>
+			</div>
+			<div class="row">
+				<ol class="col-xs-8 col-xs-offset-4 text-left">
+					<li>Clicks per second: <%= clicksPerSecond %></li>
+					<li>Total number of clicks: <%= numberOfClicks %></li>
+					<li>Time to first click: <%= (millisecondsToFirstClick / 1000).toFixed(3) %> seconds</li>
+					<li>Fastest click: <%= (millisecondsOfFastestClick / 1000).toFixed(3) %> seconds</li>
+				</ol>
 			</div>
 		</script>
 
@@ -38,7 +48,7 @@
 			<% } else { %>
 				<div class="row">
 					<div class="col-xs-12">
-						<span style="font-size: 140px;"><%= clicksPerSecond.toFixed(5) %></span>
+						<span style="font-size: 140px;"><%= clicksPerSecond.toFixed(4) %></span>
 						clicks per second
 					</div>
 				</div>
