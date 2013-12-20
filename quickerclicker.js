@@ -157,10 +157,6 @@ $(function(){
 
 	var clickOMeter = new QuickerClicker.ClickOMeter();
 	var clickOMeterView = new QuickerClicker.ClickOMeterView({
-		attributes: {
-			"class": "row"
-		},
-
 		model: clickOMeter
 	});
 
