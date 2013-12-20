@@ -10,10 +10,11 @@ $(function(){
 		defaults: {
 			countdownTimeInSeconds: 3,
 			countdownActive: false,
+			gameActive: false,
 			clicksPerSecond: 0.0,
 			numberOfClicks: 0,
 			updateSpeedInMilliseconds: 50,
-			timeToLiveInMilliseconds: 30000,
+			timeToLiveInMilliseconds: 15000,
 			numberOfMillisecondsRemaing: 0,
 			millisecondsToFirstClick: undefined,
 			millisecondsOfFastestClick: undefined,
@@ -66,6 +67,8 @@ $(function(){
 		startCountdown: function(){
 			var self = this;
 
+			self.set("gameActive", true);
+
 			var countdownTimeout = function(){
 				self.set("countdownTimeInSeconds", self.get("countdownTimeInSeconds") - 1);
 				if (self.get("countdownTimeInSeconds") > 0){
@@ -86,6 +89,7 @@ $(function(){
 			if (self.get("timerInterval") != undefined){
 				clearInterval(self.get("timerInterval"));
 				self.set("timerInterval", undefined);
+				self.set("gameActive", false);
 				self.trigger("gameOver");
 			}
 		},
@@ -108,53 +112,47 @@ $(function(){
 	});
 
 	QuickerClicker.ClickOMeterView = Backbone.Marionette.ItemView.extend({
+
 		initialize: function(){
 			this.listenTo(this.model, "change", this.render);
+		},
+
+		events: {
+			"click .js-start-game": "startGame"
 		},
 
 		attributes: {
 			"id": "clickometer"
 		},
 
-		template: "#clickometer-template"
+		getTemplate: function(){
+			if (this.model.get("gameActive")){
+				return "#clickometer-template";
+			}
+			return "#menu-template";
+		},
+
+		startGame: function(){
+			this.model.start();
+		}
+
 	});
 
 	QuickerClicker.Achievement = Backbone.Model.extend({
 	});
 
 	QuickerClicker.Achievements = Backbone.Collection.extend({
+		model: QuickerClicker.Achievement
 	});
-
-	QuickerClicker.Menu = Backbone.Model.extend({});
-	QuickerClicker.MenuView = Backbone.Marionette.ItemView.extend({
-
-		events: {
-			"click .js-start-game": "startGame"
-		},
-
-		template: "#menu-template",
-
-		startGame: function(){
-			this.model.trigger("startGame");
-		}
-
-	});
-
-	QuickerClicker.startGame = function(){
-		QuickerClicker.main.show(clickOMeterView);
-		clickOMeter.start();
-	};
 
 	QuickerClicker.on("initialize:after", function(){
-		$("html").on("click", function(e){
+		$(document).on("click", function(e){
 			if (e.originalEvent != undefined){
 				clickOMeter.registerClick();
 			}
 		});
 
-		QuickerClicker.listenTo(menu, "startGame", QuickerClicker.startGame);
-
-		QuickerClicker.main.show(menuView);
+		QuickerClicker.main.show(clickOMeterView);
 	});
 
 	var clickOMeter = new QuickerClicker.ClickOMeter();
@@ -164,11 +162,6 @@ $(function(){
 		},
 
 		model: clickOMeter
-	});
-
-	var menu = new QuickerClicker.Menu();
-	var menuView = new QuickerClicker.MenuView({
-		model: menu
 	});
 
 	QuickerClicker.start();
