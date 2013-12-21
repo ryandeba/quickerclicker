@@ -3,6 +3,7 @@ body, html {
 }
 
 body {
+	font-family: 'Anonymous Pro', sans-serif;
 	padding-top: 70px;
 
 	-webkit-touch-callout: none;
@@ -13,6 +14,6 @@ body {
 	user-select: none;
 }
 
-#quickerclicker {
-	text-align: center;
+* {
+	transition: all 0.3s;
 }
