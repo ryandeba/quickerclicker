@@ -22,20 +22,20 @@ $(function(){
 	]);
 
 	app.newGame = function(){
-		var game = new QuickerClicker.Game();
+		game = new QuickerClicker.Game();
 		var gameView = new QuickerClicker.GameView({
 			model: game
 		});
 
 		this.listenTo(clickerCatcher, "click", function(){game.addClick();});
 
-		this.listenTo(game, "gameOver", this.gameEnd);
+		this.listenTo(game, "gameOver", this.OnGameEnd);
 
 		this.mainRegion.show(gameView);
 		this.clickerCatcherRegion.show(clickerCatcherView);
 	};
 
-	app.gameEnd = function(){
+	app.onGameEnd = function(){
 		this.stopListening(clickerCatcher);
 		this.clickerCatcherRegion.reset();
 	};

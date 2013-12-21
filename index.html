@@ -30,38 +30,21 @@
 		<div id="quickerclicker" class="container"></div>
 		<div id="clickercatcher"></div>
 
-		<script type="text/template" id="menu-template">
-			<div class="row">
-				<div class="col-xs-6 col-xs-offset-3">
-					<button class="btn btn-primary js-start-game">Start Game</button>
-				</div>
-			</div>
-			<div class="row">
-				<ol class="col-xs-8 col-xs-offset-4 text-left">
-					<li>Clicks per second: <%= clicksPerSecond %></li>
-					<li>Total number of clicks: <%= numberOfClicks %></li>
-					<li>Time to first click: <%= (millisecondsToFirstClick / 1000).toFixed(3) %> seconds</li>
-					<li>Fastest click: <%= (millisecondsOfFastestClick / 1000).toFixed(3) %> seconds</li>
-				</ol>
-			</div>
-		</script>
-
 		<script type="text/template" id="game-template">
 			<div class="row">
 				<div class="col-xs-12">
-					<span style="font-size: 140px;"><%= clicksPerSecond.toFixed(2) %></span>
-					clicks per second
+					<span style="font-size: 140px;"><%= clicksPerSecond.toFixed(2) %></span> clicks per second
 				</div>
 			</div>
 
 			<% var progressBarClass = "success" %>
-			<% progressBarClass = percentOfTimeRemaining < 80 ? "info" : progressBarClass %>
-			<% progressBarClass = percentOfTimeRemaining < 40 ? "warning" : progressBarClass %>
-			<% progressBarClass = percentOfTimeRemaining < 10 ? "danger" : progressBarClass %>
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="progress progress-striped">
-						<div class="progress-bar progress-bar-<%= progressBarClass %>" style="width: <%= percentOfTimeRemaining %>%;"></div>
+						<% var redValue = parseInt(200 - (200 * (percentOfTimeRemaining / 100))); %>
+						<% var blueValue = 0; %>
+						<% var greenValue = parseInt(200 * (percentOfTimeRemaining / 100)); %>
+						<div class="progress-bar" style="width: <%= percentOfTimeRemaining %>%; background-color: rgb(<%= redValue %>, <%= greenValue %>, <%= blueValue %>);"></div>
 					</div>
 				</div>
 			</div>

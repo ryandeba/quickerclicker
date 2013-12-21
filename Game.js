@@ -46,4 +46,5 @@ $(function(){
 
 		template: "#game-template"
 	});
+
 });
