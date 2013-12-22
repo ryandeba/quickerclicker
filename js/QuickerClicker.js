@@ -32,7 +32,7 @@ $(function(){
 			startGame();
 		});
 
-		app.clickerCatcherRegion.show(countdownView);
+		app.mainRegion.show(countdownView);
 	};
 
 	var newGame = function(){
