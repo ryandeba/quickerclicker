@@ -34,7 +34,7 @@ $(function(){
 			if (this.get("millisecondsUntilGameOver") > 0){
 				setTimeout(function(){ self.update(); }, 10);
 			} else {
-				self.trigger("gameOver");
+				self.trigger("gameOver", self);
 			}
 		}
 	});
