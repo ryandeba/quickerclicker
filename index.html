@@ -29,10 +29,31 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/" class="js-start-game">Start</a></li>
 				</ul>
+				<!--
+				<ul class="nav navbar-nav navbar-right">
+					<li style="padding: 10px; 0"><input type="text" id="" placeholder="Name"></li>
+				</ul>
+				-->
 			</div>
 		</header>
 
 		<div id="quickerclicker" class="container text-center"></div>
+		<div id="stats" class="container">
+			<div class="row">
+				<div class="col-xs-4">
+					<h3 class="text-center">Clicks Per Second</h3>
+					<ol>
+						<li>12.31</li>
+					</ol>
+				</div>
+				<div class="col-xs-4">
+					<h3 class="text-center">Time to first click</h3>
+				</div>
+				<div class="col-xs-4">
+					<h3 class="text-center">Fastest Click</h3>
+				</div>
+			</div>
+		</div>
 		<div id="clickercatcher"></div>
 
 		<script type="text/template" id="game-template">
@@ -58,7 +79,7 @@
 
 		<script type="text/template" id="countdown-template">
 			<div class="row">
-				<div class="col-xs-12 text-center">
+				<div class="col-xs-12 text-center" style="font-size: 300px;">
 					<%= countdownTimeInSeconds %>
 				</div>
 			</div>

@@ -6,20 +6,17 @@ $(function(){
 		clickerCatcherRegion: "#clickercatcher"
 	});
 
-	var clickerCatcher = new QuickerClicker.ClickerCatcher();
-	var clickerCatcherView = new QuickerClicker.ClickerCatcherView({
-		model: clickerCatcher
-	});
-
 	var achievements = new QuickerClicker.AchievementCollection([
 		{
 			name: "test",
 			description: "this is a test",
-			statsMeetRequirements: function(){
+			statsMeetRequirements: function(stats){
 				return true;
 			}
 		}
 	]);
+
+	var gameHistory = new QuickerClicker.GameCollection();
 
 	var startCountdown = function(){
 		var countdown = new QuickerClicker.Countdown();
@@ -36,6 +33,7 @@ $(function(){
 	};
 
 	var newGame = function(){
+		$(".js-start-game").hide();
 		startCountdown();
 	};
 
@@ -43,6 +41,11 @@ $(function(){
 		var game = new QuickerClicker.Game();
 		var gameView = new QuickerClicker.GameView({
 			model: game
+		});
+
+		var clickerCatcher = new QuickerClicker.ClickerCatcher();
+		var clickerCatcherView = new QuickerClicker.ClickerCatcherView({
+			model: clickerCatcher
 		});
 
 		app.listenTo(clickerCatcher, "click", function(){game.addClick();});
@@ -54,8 +57,12 @@ $(function(){
 	};
 
 	var onGameEnd = function(game){
-		app.stopListening(clickerCatcher);
+		gameHistory.add(game);
 		app.clickerCatcherRegion.reset();
+		$(".js-start-game").show();
+	};
+
+	var unlockAchievements = function(){
 	};
 
 	app.on("initialize:after", function(){
@@ -63,6 +70,8 @@ $(function(){
 			e.preventDefault();
 			newGame();
 		});
+
+		this.listenTo(gameHistory, "add", unlockAchievements);
 	});
 
 	app.start();

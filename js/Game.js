@@ -47,4 +47,8 @@ $(function(){
 		template: "#game-template"
 	});
 
+	QuickerClicker.GameCollection = Backbone.Collection.extend({
+		model: QuickerClicker.Game
+	});
+
 });
