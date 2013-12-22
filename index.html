@@ -12,11 +12,12 @@
 		<script>
 			QuickerClicker = {};
 		</script>
-		<script src="ClickerCatcher.js"></script>
-		<script src="Click.js"></script>
-		<script src="Game.js"></script>
-		<script src="Achievement.js"></script>
-		<script src="QuickerClicker.js"></script>
+		<script src="js/ClickerCatcher.js"></script>
+		<script src="js/Click.js"></script>
+		<script src="js/Game.js"></script>
+		<script src="js/Achievement.js"></script>
+		<script src="js/Countdown.js"></script>
+		<script src="js/QuickerClicker.js"></script>
 	</head>
 	<body>
 
@@ -25,17 +26,13 @@
 				<div class="navbar-header">
 					<a href="/" class="navbar-brand">Quicker Clicker</a>
 				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="/" class="js-start-game">Start</a></li>
+				</ul>
 			</div>
 		</header>
 
 		<div id="quickerclicker" class="container text-center"></div>
-		<div id="menu" class="container text-center">
-			<div class="row">
-				<div class="col-xs-6 col-xs-offset-3">
-					<button class="js-">Start Game</button>
-				</div>
-			</div>
-		</div>
 		<div id="clickercatcher"></div>
 
 		<script type="text/template" id="game-template">
@@ -55,6 +52,14 @@
 						<% var greenValue = parseInt(200 * (percentOfTimeRemaining / 100)); %>
 						<div class="progress-bar" style="width: <%= percentOfTimeRemaining %>%; background-color: rgb(<%= redValue %>, <%= greenValue %>, <%= blueValue %>);"></div>
 					</div>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="countdown-template">
+			<div class="row">
+				<div class="col-xs-12 text-center">
+					<%= countdownTimeInSeconds %>
 				</div>
 			</div>
 		</script>
