@@ -44,10 +44,6 @@ $(function(){
 	});
 
 	QuickerClicker.AchievementCollectionView = Backbone.Marionette.CompositeView.extend({
-		attributes: {
-			"class": "row"
-		},
-
 		itemView: QuickerClicker.AchievementView,
 
 		itemViewContainer: ".js-item-views",

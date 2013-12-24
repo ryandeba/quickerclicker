@@ -40,21 +40,9 @@
 		</header>
 
 		<div id="main" class="container text-center"></div>
-		<div id="achievements" class="container"></div>
-		<div id="stats" class="container" style="display: none;">
+		<div id="stats" class="container">
 			<div class="row">
-				<div class="col-xs-4">
-					<h3 class="text-center">Clicks Per Second</h3>
-					<ol>
-						<li>12.31</li>
-					</ol>
-				</div>
-				<div class="col-xs-4">
-					<h3 class="text-center">Time to first click</h3>
-				</div>
-				<div class="col-xs-4">
-					<h3 class="text-center">Fastest Click</h3>
-				</div>
+				<div id="achievements" class="col-xs-6"></div>
 			</div>
 		</div>
 		<div id="clickercatcher" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(50,50,50,.1); display: none;"></div>
@@ -63,7 +51,7 @@
 			<div class="row">
 				<div class="col-xs-12">
 					<% var formattedClicksPerSecond = clicksPerSecond.toFixed(2); %>
-					<span style="font-size: 140px;"><%= formattedClicksPerSecond < 10 ? '&nbsp;' : '' %><%= formattedClicksPerSecond %></span> clicks per second
+					<div><span style="font-size: 140px;"><%= formattedClicksPerSecond < 10 ? '&nbsp;' : '' %><%= formattedClicksPerSecond %></span> clicks per second</div>
 				</div>
 			</div>
 
@@ -89,10 +77,8 @@
 		</script>
 
 		<script type="text/template" id="achievement-collection-template">
-			<div class="col-xs-12">
-				<h1>Achievements</h1>
-				<div class="js-item-views"></div>
-			</div>
+			<h1>Achievements</h1>
+			<div class="js-item-views"></div>
 		</script>
 
 		<script type="text/template" id="achievement-template">

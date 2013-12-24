@@ -4,7 +4,6 @@ $(function(){
 	QuickerClicker.addRegions({
 		mainRegion: "#main",
 		achievements: "#achievements",
-		stats: "#stats",
 		clickerCatcherRegion: "#clickercatcher"
 	});
 
@@ -60,7 +59,7 @@ $(function(){
 				},
 				{
 					name: "High Five",
-					description: "Slap some skin",
+					description: "Slappin' skin",
 					requirementsDescription: "5 clicks per second",
 					statsMeetRequirements: function(stats){
 						return stats.clicksPerSecond == 5;
@@ -126,6 +125,7 @@ $(function(){
 		clickerCatcherView.$el.hide();
 		gameInProgress = false;
 		achievements.tryToUnlock(game.getStats());
+		console.log(game.getStats());
 		showAchievements();
 	};
 

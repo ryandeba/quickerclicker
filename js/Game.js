@@ -18,8 +18,19 @@ $(function(){
 
 		getStats: function(){
 			return {
-				clicksPerSecond: parseFloat(this.get("clicksPerSecond").toFixed(2))
+				clicksPerSecond: parseFloat(this.get("clicksPerSecond").toFixed(2)),
+				fastestClickInMilliseconds: this.getFastestClickInMilliseconds(),
+				millisecondsToFirstClick: this.getMillisecondsToFirstClick()
 			}
+		},
+
+		getMillisecondsToFirstClick: function(){
+			if (this.get("clicks").length == 0) return undefined;
+			return this.get("clicks").at(0).get("timeCreated") - this.get("timeStarted");
+		},
+
+		getFastestClickInMilliseconds: function(){
+			return this.get("clicks").getFastestClick();
 		},
 
 		addClick: function(){
