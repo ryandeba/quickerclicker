@@ -11,6 +11,9 @@ $(function(){
 			this.set("clicksPerSecond", 0);
 
 			this.update();
+
+			this.listenTo(QuickerClicker.vent, "clickerCatcher:click", this.addClick);
+			QuickerClicker.vent.trigger("game:start", this);
 		},
 
 		addClick: function(){
@@ -34,7 +37,7 @@ $(function(){
 			if (this.get("millisecondsUntilGameOver") > 0){
 				setTimeout(function(){ self.update(); }, 10);
 			} else {
-				self.trigger("gameOver", self);
+				QuickerClicker.vent.trigger("game:finish", self);
 			}
 		}
 	});

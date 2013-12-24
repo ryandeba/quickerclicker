@@ -7,6 +7,7 @@ $(function(){
 		initialize: function(){
 			var self = this;
 
+			QuickerClicker.vent.trigger("countdown:start", self);
 			setTimeout(function(){ self.update(); }, 1000);
 		},
 
@@ -16,7 +17,7 @@ $(function(){
 			self.set("countdownTimeInSeconds", self.get("countdownTimeInSeconds") - 1);
 
 			if (self.get("countdownTimeInSeconds") <= 0){
-				self.trigger("countdownComplete");
+				QuickerClicker.vent.trigger("countdown:finish", self);
 			} else {
 				setTimeout(function(){ self.update(); }, 1000);
 			}
