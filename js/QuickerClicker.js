@@ -3,8 +3,10 @@ $(function(){
 
 	QuickerClicker.addRegions({
 		mainRegion: "#main",
+		achievements: "#achievements",
 		stats: "#stats",
-		clickerCatcherRegion: "#clickercatcher" });
+		clickerCatcherRegion: "#clickercatcher"
+	});
 
 	var gameInProgress = false;
 
@@ -41,17 +43,35 @@ $(function(){
 		achievements = new QuickerClicker.AchievementCollection(
 			[
 				{
-					name: "Oner",
-					description: "Clicks per second == 1",
+					name: "You suck!",
+					description: "You do know you're supposed to click, right?",
+					requirementsDescription: "0 clicks per second",
+					statsMeetRequirements: function(stats){
+						return stats.clicksPerSecond == 0;
+					}
+				},
+				{
+					name: "Uno",
+					description: "A journey of a thousand clicks per second starts with a single click per second",
+					requirementsDescription: "1 click per second",
 					statsMeetRequirements: function(stats){
 						return stats.clicksPerSecond == 1;
 					}
 				},
 				{
-					name: "Fiver",
-					description: "Clicks per second >= 5",
+					name: "High Five",
+					description: "Slap some skin",
+					requirementsDescription: "5 clicks per second",
 					statsMeetRequirements: function(stats){
-						return stats.clicksPerSecond >= 5;
+						return stats.clicksPerSecond == 5;
+					}
+				},
+				{
+					name: "Niner",
+					description: "Niner? I barely know her!",
+					requirementsDescription: "9 or more clicks per second",
+					statsMeetRequirements: function(stats){
+						return stats.clicksPerSecond >= 9;
 					}
 				}
 			]
@@ -86,6 +106,7 @@ $(function(){
 		var countdownView = new QuickerClicker.CountdownView({
 			model: countdown
 		});
+		hideAchievements();
 		QuickerClicker.mainRegion.show(countdownView);
 	};
 
@@ -108,11 +129,15 @@ $(function(){
 		showAchievements();
 	};
 
+	var hideAchievements = function(){
+		QuickerClicker.achievements.reset();
+	};
+
 	var showAchievements = function(){
 		var achievementsView = new QuickerClicker.AchievementCollectionView({
 			collection: achievements
 		});
-		QuickerClicker.mainRegion.show(achievementsView);
+		QuickerClicker.achievements.show(achievementsView);
 	};
 
 });

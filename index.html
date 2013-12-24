@@ -40,6 +40,7 @@
 		</header>
 
 		<div id="main" class="container text-center"></div>
+		<div id="achievements" class="container"></div>
 		<div id="stats" class="container" style="display: none;">
 			<div class="row">
 				<div class="col-xs-4">
@@ -87,8 +88,25 @@
 			</div>
 		</script>
 
+		<script type="text/template" id="achievement-collection-template">
+			<div class="col-xs-12">
+				<h1>Achievements</h1>
+				<div class="js-item-views"></div>
+			</div>
+		</script>
+
 		<script type="text/template" id="achievement-template">
-			<%= name %> | <%= description %> | <%= unlocked %>
+			<div class="panel panel-<%= unlocked ? 'success' : 'danger' %>">
+				<div class="panel-heading">
+					<%= name %> - <span style="font-style: italic;"><%= unlocked ? 'Unlocked' : 'Locked' %></span>
+				</div>
+				<div class="panel-body">
+					<p><%= description %></p>
+					<% if (unlocked){ %>
+						<p><%= requirementsDescription %></p>
+					<% } %>
+				</div>
+			</div>
 		</script>
 
 	</body>

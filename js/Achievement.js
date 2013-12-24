@@ -15,6 +15,7 @@ $(function(){
 		defaults: {
 			name: "",
 			description: "",
+			requirementsDescription: "",
 			unlocked: false,
 			statsMeetRequirements: function(stats){
 				return false;
@@ -27,7 +28,7 @@ $(function(){
 	});
 
 	QuickerClicker.AchievementView = Backbone.Marionette.ItemView.extend({
-		tagName: "li",
+		tagName: "div",
 
 		template: "#achievement-template"
 	});
@@ -42,13 +43,15 @@ $(function(){
 		}
 	});
 
-	QuickerClicker.AchievementCollectionView = Backbone.Marionette.CollectionView.extend({
+	QuickerClicker.AchievementCollectionView = Backbone.Marionette.CompositeView.extend({
 		attributes: {
-			"class": "text-left"
+			"class": "row"
 		},
 
 		itemView: QuickerClicker.AchievementView,
 
-		tagName: "ol"
+		itemViewContainer: ".js-item-views",
+
+		template: "#achievement-collection-template"
 	});
 });
