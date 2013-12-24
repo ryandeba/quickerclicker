@@ -35,7 +35,28 @@ $(function(){
 	});
 	var clickerCatcherView = new ClickerCatcherView();
 
+	var achievements;
+
 	QuickerClicker.on("initialize:after", function(){
+		achievements = new QuickerClicker.AchievementCollection(
+			[
+				{
+					name: "Oner",
+					description: "Clicks per second == 1",
+					statsMeetRequirements: function(stats){
+						return stats.clicksPerSecond == 1;
+					}
+				},
+				{
+					name: "Fiver",
+					description: "Clicks per second >= 5",
+					statsMeetRequirements: function(stats){
+						return stats.clicksPerSecond >= 5;
+					}
+				}
+			]
+		);
+
 		this.listenTo(this.vent, "newGame", function(){
 			startCountdown();
 		});
@@ -83,6 +104,15 @@ $(function(){
 	var finishGame = function(game){
 		clickerCatcherView.$el.hide();
 		gameInProgress = false;
+		achievements.tryToUnlock(game.getStats());
+		showAchievements();
+	};
+
+	var showAchievements = function(){
+		var achievementsView = new QuickerClicker.AchievementCollectionView({
+			collection: achievements
+		});
+		QuickerClicker.mainRegion.show(achievementsView);
 	};
 
 });

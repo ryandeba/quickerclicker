@@ -10,6 +10,7 @@
 		<script src="bower_components/marionette/lib/backbone.marionette.js"></script>
 
 		<script src="js/QuickerClicker.js"></script>
+		<script src="js/Achievement.js"></script>
 		<script src="js/Click.js"></script>
 		<script src="js/Game.js"></script>
 		<script src="js/Achievement.js"></script>
@@ -84,6 +85,10 @@
 					<%= countdownTimeInSeconds %>
 				</div>
 			</div>
+		</script>
+
+		<script type="text/template" id="achievement-template">
+			<%= name %> | <%= description %> | <%= unlocked %>
 		</script>
 
 	</body>

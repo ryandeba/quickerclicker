@@ -1,5 +1,5 @@
 $(function(){
-	var GAME_LENGTH_IN_MILLISECONDS = 15000;
+	var GAME_LENGTH_IN_MILLISECONDS = 5000;
 
 	QuickerClicker.Game = Backbone.Model.extend({
 		initialize: function(){
@@ -16,6 +16,12 @@ $(function(){
 			QuickerClicker.vent.trigger("game:start", this);
 		},
 
+		getStats: function(){
+			return {
+				clicksPerSecond: parseFloat(this.get("clicksPerSecond").toFixed(2))
+			}
+		},
+
 		addClick: function(){
 			this.get("clicks").add({});
 		},
@@ -28,7 +34,7 @@ $(function(){
 			millisecondsUntilGameOver = millisecondsUntilGameOver < 0 ? 0 : millisecondsUntilGameOver;
 			this.set("millisecondsUntilGameOver", millisecondsUntilGameOver);
 
-			this.set("percentOfTimeRemaining", this.get("millisecondsUntilGameOver") / 15000 * 100);
+			this.set("percentOfTimeRemaining", this.get("millisecondsUntilGameOver") / GAME_LENGTH_IN_MILLISECONDS * 100);
 
 			var millisecondsElapsed = currentTime - this.get("timeStarted");
 			var clicksPerSecond = this.get("clicks").length / (millisecondsElapsed / 1000);
