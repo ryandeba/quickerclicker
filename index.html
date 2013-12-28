@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Quicker Clicker</title>
 		<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 		<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,700' rel='stylesheet' type='text/css'>
 		<link href="application.css" rel="stylesheet" />
@@ -10,7 +11,6 @@
 		<script src="bower_components/marionette/lib/backbone.marionette.js"></script>
 
 		<script src="js/QuickerClicker.js"></script>
-		<script src="js/Achievement.js"></script>
 		<script src="js/Click.js"></script>
 		<script src="js/Game.js"></script>
 		<script src="js/Achievement.js"></script>
@@ -43,6 +43,31 @@
 		<div id="stats" class="container">
 			<div class="row">
 				<div id="achievements" class="col-xs-6"></div>
+				<div id="stats" class="col-xs-6">
+				<h1>Stats</h1>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Clicks per second</div>
+						<div class="panel-body">
+							<ol id="clicksPerSecond"></ol>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Seconds to first click</div>
+						<div class="panel-body">
+							<ol id="secondsToFirstClick"></ol>
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Fastest click</div>
+						<div class="panel-body">
+							<ol id="fastestClick"></ol>
+						</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 		<div id="clickercatcher" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(50,50,50,.1); display: none;"></div>
@@ -83,6 +108,25 @@
 
 		<script type="text/template" id="achievement-template">
 			<div class="panel panel-<%= unlocked ? 'success' : 'danger' %>">
+				<div class="panel-heading">
+					<%= name %> - <span style="font-style: italic;"><%= unlocked ? 'Unlocked' : 'Locked' %></span>
+				</div>
+				<div class="panel-body">
+					<p><%= description %></p>
+					<% if (unlocked){ %>
+						<p><%= requirementsDescription %></p>
+					<% } %>
+				</div>
+			</div>
+		</script>
+
+		<script type="text/template" id="stats-collection-template">
+			<h1>Stats</h1>
+			<div class="js-item-views"></div>
+		</script>
+
+		<script type="text/template" id="stat-template">
+			<div class="panel panel-default">
 				<div class="panel-heading">
 					<%= name %> - <span style="font-style: italic;"><%= unlocked ? 'Unlocked' : 'Locked' %></span>
 				</div>

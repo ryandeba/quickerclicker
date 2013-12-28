@@ -67,8 +67,50 @@ $(function(){
 		template: "#game-template"
 	});
 
-	QuickerClicker.GameCollection = Backbone.Collection.extend({
-		model: QuickerClicker.Game
+	QuickerClicker.GameCollectionView = Backbone.Marionette.View.extend({
+		el: "#stats",
+
+		render: function(){
+			this.renderClicksPerSecond();
+			this.renderSecondsToFirstClick();
+			this.renderFastestClick();
+		},
+
+		renderClicksPerSecond: function(){
+			var $thisEl = this.$el.find("#clicksPerSecond")
+			$thisEl.html("");
+
+			this.collection.sortBy(function(model){ return model.get("clicksPerSecond"); });
+
+			this.collection.each(function(model){
+				var modelView = "<li>" + model.get("clicksPerSecond") + "</li>";
+				$thisEl.append(modelView);
+			});
+		},
+
+		renderSecondsToFirstClick: function(){
+			var $thisEl = this.$el.find("#secondsToFirstClick")
+			$thisEl.html("");
+
+			this.collection.sortBy(function(model){ return model.get("millisecondsToFirstClick"); });
+
+			this.collection.each(function(model){
+				var modelView = "<li>" + model.get("millisecondsToFirstClick") / 1000 + "</li>";
+				$thisEl.append(modelView);
+			});
+		},
+
+		renderFastestClick: function(){
+			var $thisEl = this.$el.find("#fastestClick")
+			$thisEl.html("");
+
+			this.collection.sortBy(function(model){ return model.get("fastestClickInMilliseconds"); });
+
+			this.collection.each(function(model){
+				var modelView = "<li>" + model.get("fastestClickInMilliseconds") / 1000 + "</li>";
+				$thisEl.append(modelView);
+			});
+		}
 	});
 
 });

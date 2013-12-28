@@ -36,7 +36,7 @@ $(function(){
 	});
 	var clickerCatcherView = new ClickerCatcherView();
 
-	var achievements;
+	var achievements, gameHistory;
 
 	QuickerClicker.on("initialize:after", function(){
 		achievements = new QuickerClicker.AchievementCollection(
@@ -75,6 +75,8 @@ $(function(){
 				}
 			]
 		);
+
+		gameHistory = new Backbone.Collection();
 
 		this.listenTo(this.vent, "newGame", function(){
 			startCountdown();
@@ -122,11 +124,12 @@ $(function(){
 	};
 
 	var finishGame = function(game){
+		gameHistory.add(game.getStats());
 		clickerCatcherView.$el.hide();
 		gameInProgress = false;
 		achievements.tryToUnlock(game.getStats());
-		console.log(game.getStats());
 		showAchievements();
+		showStats();
 	};
 
 	var hideAchievements = function(){
@@ -138,6 +141,13 @@ $(function(){
 			collection: achievements
 		});
 		QuickerClicker.achievements.show(achievementsView);
+	};
+
+	var showStats = function(){
+		var statsView = new QuickerClicker.GameCollectionView({
+			collection: gameHistory
+		});
+		statsView.render();
 	};
 
 });
