@@ -54,6 +54,7 @@ $(function(){
 			if (this.get("millisecondsUntilGameOver") > 0){
 				setTimeout(function(){ self.update(); }, 10);
 			} else {
+				this.set("clicksPerSecond", this.get("clicks").length / (GAME_LENGTH_IN_MILLISECONDS / 1000)); //set the actual clicks per second
 				QuickerClicker.vent.trigger("game:finish", self);
 			}
 		}
@@ -80,7 +81,7 @@ $(function(){
 			var $thisEl = this.$el.find("#clicksPerSecond")
 			$thisEl.html("");
 
-			this.collection.sortBy(function(model){ return model.get("clicksPerSecond"); });
+			this.collection.sortBy(function(model){ return model.get("clicksPerSecond") * -1; });
 
 			this.collection.each(function(model){
 				var modelView = "<li>" + model.get("clicksPerSecond") + "</li>";
