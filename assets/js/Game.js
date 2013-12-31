@@ -81,8 +81,6 @@ $(function(){
 			var $thisEl = this.$el.find("#clicksPerSecond")
 			$thisEl.html("");
 
-			this.collection.sortBy(function(model){ return model.get("clicksPerSecond") * -1; });
-
 			this.collection.each(function(model){
 				var modelView = "<li>" + model.get("clicksPerSecond") + "</li>";
 				$thisEl.append(modelView);
@@ -92,8 +90,6 @@ $(function(){
 		renderSecondsToFirstClick: function(){
 			var $thisEl = this.$el.find("#secondsToFirstClick")
 			$thisEl.html("");
-
-			this.collection.sortBy(function(model){ return model.get("millisecondsToFirstClick"); });
 
 			this.collection.each(function(model){
 				var modelView = "<li>" + model.get("millisecondsToFirstClick") / 1000 + "</li>";
@@ -105,13 +101,10 @@ $(function(){
 			var $thisEl = this.$el.find("#fastestClick")
 			$thisEl.html("");
 
-			this.collection.sortBy(function(model){ return model.get("fastestClickInMilliseconds"); });
-
 			this.collection.each(function(model){
 				var modelView = "<li>" + model.get("fastestClickInMilliseconds") / 1000 + "</li>";
 				$thisEl.append(modelView);
 			});
 		}
 	});
-
 });

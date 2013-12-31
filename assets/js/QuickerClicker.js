@@ -153,10 +153,11 @@ $(function(){
 	};
 
 	var showClickFeedback = function(event){
-		var $el = $($("#click-template").html());
-		$el.css({"top": event.clientY - 15, "left": event.clientX - 10});
-		$('body').append($el);
-		setTimeout(function(){ $el.remove(); }, 2000);
+		var clickView = new QuickerClicker.ClickView({
+			"top": event.clientY,
+			"left": event.clientX,
+		});
+		$('body').append(clickView.render().$el);
 	};
 
 });

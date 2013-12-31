@@ -22,4 +22,39 @@ $(function(){
 			return fastestClickInMilliseconds;
 		}
 	});
+
+	QuickerClicker.ClickView = Backbone.Marionette.ItemView.extend({
+		template: "#click-template",
+
+		attributes: {
+			"class": "animated fadeOutUp"
+		},
+
+		initialize: function(options){
+			var self = this;
+			self.options = options;
+			setTimeout(function(){ self.$el.remove(); }, 2000);
+		},
+
+		onRender: function(){
+			var self = this;
+
+			var randomNumber = function(){
+				var result = Math.floor(Math.random() * 30);
+				return Math.random() > 0.5 ? result * - 1 : result;
+			};
+
+			var randomRGBValue = function(){
+				return Math.floor(Math.random() * 255);
+			};
+
+			self.$el.css({
+				"position": "absolute",
+				"z-index": 998,
+				"top": self.options.top + randomNumber(),
+				"left": self.options.left + randomNumber(),
+				"color": "rgb(" + randomRGBValue() + ", " + randomRGBValue() + ", " + randomRGBValue() + ")"
+			});
+		}
+	});
 });
