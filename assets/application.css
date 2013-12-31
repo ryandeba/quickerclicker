@@ -3,7 +3,6 @@ body, html {
 }
 
 body {
-	font-size: 11px;
 	padding-top: 70px;
 
 	-webkit-touch-callout: none;
@@ -16,5 +15,4 @@ body {
 
 * {
 	transition: all 0.3s;
-	font-family: 'Press Start 2P' !important;
 }
