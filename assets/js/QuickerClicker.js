@@ -30,8 +30,8 @@ $(function(){
 			"click": "registerClick"
 		},
 
-		registerClick: function(){
-			QuickerClicker.vent.trigger("clickerCatcher:click");
+		registerClick: function(event){
+			QuickerClicker.vent.trigger("clickerCatcher:click", event);
 		}
 	});
 	var clickerCatcherView = new ClickerCatcherView();
@@ -93,13 +93,15 @@ $(function(){
 		this.listenTo(this.vent, "game:finish", function(game){
 			finishGame(game);
 		});
+		this.listenTo(this.vent, "clickerCatcher:click", function(event){
+			showClickFeedback(event);
+		});
 
 		this.vent.trigger("newGame"); //TODO: maybe don't start it automatically?
 	});
 
 	var startCountdown = function(){
-		if (gameInProgress) return false;
-		gameInProgress = true;
+		if (gameInProgress) return false; gameInProgress = true;
 		var countdown = new QuickerClicker.Countdown();
 	};
 
@@ -148,6 +150,13 @@ $(function(){
 			collection: gameHistory
 		});
 		statsView.render();
+	};
+
+	var showClickFeedback = function(event){
+		var $el = $($("#click-template").html());
+		$el.css({"top": event.clientY - 15, "left": event.clientX - 10});
+		$('body').append($el);
+		setTimeout(function(){ $el.remove(); }, 2000);
 	};
 
 });

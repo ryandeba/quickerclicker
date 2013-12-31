@@ -2,6 +2,7 @@ import webapp2
 import os
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
+from google.appengine.ext import ndb
 
 class Index(webapp2.RequestHandler):
 
