@@ -16,3 +16,14 @@ body {
 * {
 	transition: all 0.3s;
 }
+
+.progress.progress-vertical {
+	margin-bottom: 0;
+	width: 20px;
+}
+
+.progress.progress-vertical .progress-bar {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}

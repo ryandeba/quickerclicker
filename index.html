@@ -51,12 +51,16 @@
 				</ul>
 			</div>
 		</header>
-
+<!--
+		<div class="progress progress-vertical" style="height: 150px;">
+			<div class="progress-bar" style="position: relative; top: 25%;"></div>
+		</div>
+-->
 		<div id="main" class="container text-center"></div>
 		<div id="stats" class="container">
 			<div class="row">
 				<div id="achievements" class="col-xs-6"></div>
-				<div id="stats" class="col-xs-6">
+				<div id="stats" class="col-xs-6" style="display: none;">
 				<h1>Stats</h1>
 
 					<div class="panel panel-default">
@@ -87,9 +91,12 @@
 
 		<script type="text/template" id="game-template">
 			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-6">
+					<span style="font-size: 100px;"><%= clicks.length < 10 ? '&nbsp;' : '' %><%= clicks.length %></span> clicks
+				</div>
+				<div class="col-xs-6">
 					<% var formattedClicksPerSecond = clicksPerSecond.toFixed(2); %>
-					<div><span style="font-size: 140px;"><%= formattedClicksPerSecond < 10 ? '&nbsp;' : '' %><%= formattedClicksPerSecond %></span> clicks per second</div>
+					<span style="font-size: 100px;"><%= formattedClicksPerSecond < 10 ? '&nbsp;' : '' %><%= formattedClicksPerSecond %></span> clicks per second
 				</div>
 			</div>
 
